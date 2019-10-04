@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 
@@ -11,7 +11,11 @@ def login(request):
 		password = request.POST.get('password')
 		user = authenticate(username=username, password=password)
 		if user is not None:
-			return redirect(user, userid)
+			userid = user.id
+			return redirect(profile, userid)
 		context['error'] = 'Invalid credentials'
 		return render(request, 'login.html', context)
 	return render(request, 'login.html', context)
+
+def profile(request, userid):
+	return render(request, 'profile.html')
