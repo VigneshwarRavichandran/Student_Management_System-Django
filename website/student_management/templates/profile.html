@@ -10,10 +10,107 @@
 </head>
 <body>
 	<div class="container">
-	  <h3>User Login</h3>
+	  <h3>User Profile</h3>
+	  <h5>Username : {{ username }}</h5>
+	  <h5>UserID : {{ userid }}</h5>
 		<form method="post">
 			{% csrf_token %}
-	    <button type="submit" class="btn btn-default" value='add_user'>Login</button>
+			<!-- Admin Actions -->
+			{% if user == 'superuser' %}
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#professordetails">Create Professor</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#studentdetails">Create Student</button>
+				<!-- Modal -->
+				<div class="modal fade" id="professordetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle1">Enter Professor Details</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <form method="post">
+									{% csrf_token %}
+							    <div class="form-group">
+							      <label>Username</label>
+							      <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
+							    </div>
+							    <div class="form-group">
+							      <label>Email ID</label>
+							      <input type="email" class="form-control" id="email" placeholder="Enter email ID" name="email">
+							    </div>
+							    <div class="form-group">
+							      <label>Password</label>
+							      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+							    </div>
+									<div class="form-group">
+							      <label>Subject ID</label>
+							      <input type="text" class="form-control" id="subjectid" placeholder="Enter subject ID" name="subjectid">
+							    </div>							    
+							    {% if error %}
+							    	<h6 style="color:red">{{ error }}</h6>
+							    {% endif %}
+
+							    <button name='add_professor' type="submit" class="btn btn-default" value='add_professor'>Register</button>
+							  </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<div class="modal fade" id="studentdetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle2" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle2">Enter Student Details</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <form method="post">
+									{% csrf_token %}
+							    <div class="form-group">
+							      <label>Username</label>
+							      <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
+							    </div>
+							    <div class="form-group">
+							      <label>Email ID</label>
+							      <input type="email" class="form-control" id="email" placeholder="Enter email ID" name="email">
+							    </div>
+							    <div class="form-group">
+							      <label>Password</label>
+							      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+							    </div>
+							    <div class="form-group">
+							      <label>Department ID</label>
+							      <input type="text" class="form-control" id="departmentid" placeholder="Enter department ID" name="departmentid">
+							    </div>
+							    {% if error %}
+							    	<h6 style="color:red">{{ error }}</h6>
+							    {% endif %}
+							    <button name='add_student' type="submit" class="btn btn-default" value='add_student'>Register</button>
+							  </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+	    {% endif %}
+	    <!-- Professoer Actions -->
+	    {% if user == 'professor' %}
+	    	<button type="submit" name='list_students' class="btn btn-default" value='list_students'>List Students</button>
+	    {% endif %}
+	    <!-- Professoer Actions -->
+	    {% if user == 'student' %}
+	    	<button type="submit" name='list_subjects' class="btn btn-default" value='list_subjects'>List Subjects</button>
+	    	<button type="submit" name='list_professors' class="btn btn-default" value='list_professors'>List Professors</button>
+	    {% endif %}
 	  </form>
 	</div>
 </body>
