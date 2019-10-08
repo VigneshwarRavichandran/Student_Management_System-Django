@@ -47,6 +47,5 @@ def list_professors(userid):
 		subject_ids.append(subject['id'])
 	for professor in professors:
 		if professor.subject_id in subject_ids:
-			print(professor)
 			student_professors.append([professor.id, professor.user.username, professor.subject.name])
 	return student_professors

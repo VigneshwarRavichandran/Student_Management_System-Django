@@ -40,7 +40,7 @@ def profile(request, userid, username):
 		elif 'list_subjects' in request.POST:
 			response = list_subjects(userid)
 		elif 'list_professors' in request.POST:
-			reponse = list_professors(userid)
+			response = list_professors(userid)
 		return HttpResponse(response)
 	if is_superuser(userid):
 		context['user'] = 'superuser'
